@@ -1058,7 +1058,13 @@ void Displ_drawCircle(int16_t x0, int16_t y0, int16_t r, uint16_t color)
  ********************************************
  ********************************************/
 
+// duty in percent
+uint32_t  Displ_BackLightDuty(uint8_t duty) {
 
+  if ( duty > 100 ) duty = 100;
+  return BKLIT_TIMER->BKLIT_CCR = duty * BKLIT_TIMER->ARR / 100;
+
+}
 
 
 
@@ -1067,14 +1073,15 @@ void Displ_drawCircle(int16_t x0, int16_t y0, int16_t r, uint16_t color)
 /**************************************
  * @brief		set backlight level
  * 				PLEASE NOTE: if not in "DIMMING MODE" only 'F', '1', '0' and 'Q' available
- * @param	cmd	'S'		put display in stby (light level=BKLIT_STBY_LEVEL)
+ * @param	cmd
+ *        'S'		put display in stby (light level=BKLIT_STBY_LEVEL)
  * 				'W' 	wake-up from stdby restoring previous level
  *				'+'		add 1 step to the current light level
  *				'-'		reduce 1 step to the current light level
  *				'F','1'	set the display level to max
  *				'0'		set the display level to 0 (off)
  *				'I'		'Initialize'. If dimming mode, IT MUST BE run on startup
- *              'Q'		do nothing, just return current level
+ *        'Q'		do nothing, just return current level
  * @return		current backlight level
  **************************************/
 uint32_t  Displ_BackLight(uint8_t cmd) {
@@ -1122,7 +1129,7 @@ uint32_t  Displ_BackLight(uint8_t cmd) {
 		break;
 	case 'I':
 	  	HAL_TIM_PWM_Start(&BKLIT_T, BKLIT_CHANNEL);
-		Displ_BackLight(BKLIT_INIT_LEVEL);
+	  	BKLIT_TIMER->BKLIT_CCR=BKLIT_INIT_LEVEL;
 		break;
 #endif
 	case 'Q':

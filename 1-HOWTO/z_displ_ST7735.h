@@ -12,12 +12,12 @@
  *  These are the init instruction to put in you main() USER CODE BEGIN 2
  *
  *  (if Direct Handling)
- *  Displ_Init(Displ_Orientat_0);			// (mandatory) initialize display controller - set orientation parameter as per your needs
- *  Displ_CLS(BLACK);						// clear the screen - BLACK or any other color you prefer
+ *  Displ_Init(Displ_Orientat_0);		// (mandatory) initialize display controller - set orientation parameter as per your needs
+ *  Displ_CLS(BLACK);						    // clear the screen - BLACK or any other color you prefer
  *  Displ_BackLight('I');  					// (mandatory) initialize backlight
  *
  *  (if using TouchGFX)
- *  Displ_Init(Displ_Orientat_0);			// (mandatory) initialize display controller - set orientation parameter as per TouchGFX setup
+ *  Displ_Init(Displ_Orientat_0);		// (mandatory) initialize display controller - set orientation parameter as per TouchGFX setup
  * 	touchgfxSignalVSync();					// ask display syncronization
  *  Displ_BackLight('I');  					// (mandatory) initialize backlight
  *
@@ -34,7 +34,7 @@
  * uncommenting the below #define to enable
  * functions interfacing TouchGFX
  ***************************************************/
-//#define DISPLAY_USING_TOUCHGFX
+#define DISPLAY_USING_TOUCHGFX
 
 
 /*||||||||||| USER/PROJECT PARAMETERS |||||||||||*/
@@ -45,7 +45,7 @@
  ********  the SPI port defined on CubeMX *********/
 
 #define DISPLAY_SPI_PORT 	hspi1
-#define DISPLAY_SPI 		SPI1
+#define DISPLAY_SPI 		  SPI1
 
 
 /*****************     STEP 2      ****************
@@ -77,14 +77,14 @@
  * Set all other defines below */
 
 
-//#define DISPLAY_DIMMING_MODE						// uncomment this define to enable dimming function otherwise there is an on/off switching function
+#define DISPLAY_DIMMING_MODE			// uncomment this define to enable dimming function otherwise there is an on/off switching function
 #ifdef DISPLAY_DIMMING_MODE
-#define BKLIT_TIMER 				TIM3			//timer used (PWMming DISPL_LED pin)
-#define BKLIT_T 					htim3			//timer used
-#define BKLIT_CHANNEL				TIM_CHANNEL_2	//channel used
-#define BKLIT_CCR					CCR2			//preload register
-#define BKLIT_STBY_LEVEL 			1				//Display backlight level when in stand-by (levels are CNT values)
-#define BKLIT_INIT_LEVEL 			50				//Display backlight level on startup
+#define BKLIT_TIMER 			TIM3		//timer used (PWMming DISPL_LED pin)
+#define BKLIT_T 					htim3		//timer used
+#define BKLIT_CHANNEL			TIM_CHANNEL_3	//channel used
+#define BKLIT_CCR					CCR3		//preload register
+#define BKLIT_STBY_LEVEL 		4			//Display backlight level when in stand-by (levels are CNT values)
+#define BKLIT_INIT_LEVEL 	 50			//Display backlight level on startup
 #endif
 
 
@@ -146,7 +146,7 @@ extern int16_t _width;       								///< (oriented) display width
 extern int16_t _height;      								///< (oriented) display height
 
 #define SPI_COMMAND GPIO_PIN_RESET  //DISPL_DC_Pin level sending commands
-#define SPI_DATA GPIO_PIN_SET		//DISPL_DC_Pin level sending data
+#define SPI_DATA GPIO_PIN_SET		    //DISPL_DC_Pin level sending data
 
 
 /***************************
@@ -212,7 +212,7 @@ void Displ_drawRoundRect(int16_t x, int16_t y, int16_t w, int16_t h, int16_t r, 
 void Displ_fillRoundRect(int16_t x, int16_t y, int16_t w, int16_t h, int16_t r, uint16_t color);
 
 uint32_t Displ_BackLight(uint8_t cmd);
-
+uint32_t Displ_BackLightDuty(uint8_t duty);
 
 #ifdef DISPLAY_USING_TOUCHGFX
 int touchgfxDisplayDriverTransmitActive();
